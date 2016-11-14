@@ -27,6 +27,10 @@
     
     UIImageView *imageView = [[UIImageView alloc] init];
     
+    [self.zoomScrollView addSubview:imageView];
+    
+    [self setImageViewConstraints:imageView];
+    
     
     
     
@@ -36,5 +40,44 @@
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
+
+
+- (void)setImageViewConstraints:(UIImageView *)imageView {
+    
+    [self.zoomScrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                                   attribute:NSLayoutAttributeTop
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.zoomScrollView
+                                                                   attribute:NSLayoutAttributeTop
+                                                                  multiplier:1.0
+                                                                     constant:0.0]];
+    
+    [self.zoomScrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                                   attribute:NSLayoutAttributeLeft
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.zoomScrollView
+                                                                   attribute:NSLayoutAttributeLeft
+                                                                  multiplier:1.0
+                                                                     constant:0.0]];
+    
+    [self.zoomScrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                                   attribute:NSLayoutAttributeBottom
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.zoomScrollView
+                                                                   attribute:NSLayoutAttributeBottom
+                                                                  multiplier:1.0
+                                                                     constant:0.0]];
+    
+    [self.zoomScrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                                   attribute:NSLayoutAttributeRight
+                                                                   relatedBy:NSLayoutRelationEqual
+                                                                      toItem:self.zoomScrollView
+                                                                   attribute:NSLayoutAttributeRight
+                                                                  multiplier:1.0
+                                                                     constant:0.0]];
+    
+    
+}
+
 
 @end
