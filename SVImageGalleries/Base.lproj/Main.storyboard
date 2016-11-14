@@ -22,7 +22,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hpM-eS-EIv">
-                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <rect key="frame" x="0.0" y="20" width="375" height="647"/>
                                 <connections>
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="hbT-Xp-auG"/>
                                 </connections>
@@ -31,7 +31,7 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="hpM-eS-EIv" secondAttribute="trailing" id="7WP-hg-EPT"/>
-                            <constraint firstItem="hpM-eS-EIv" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="KHE-l9-b4o"/>
+                            <constraint firstItem="hpM-eS-EIv" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" constant="20" id="KHE-l9-b4o"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="hpM-eS-EIv" secondAttribute="bottom" id="KiS-9u-viv"/>
                             <constraint firstItem="hpM-eS-EIv" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="hDe-2T-d0s"/>
                         </constraints>
