@@ -8,13 +8,14 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UIScrollViewDelegate>
+@interface ViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *pageScrollview;
 
 
 @property (nonatomic, strong) IBOutlet UIImageView *lighthouseFieldView;
 @property (nonatomic, strong) IBOutlet UIImageView *lighthouseNightView;
+@property (nonatomic, strong) UITapGestureRecognizer *tapGR;
 
 @property (nonatomic, readonly) NSArray *lighthouseImageArray;
 
@@ -25,14 +26,20 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+    
+    self.pageScrollview.backgroundColor = [UIColor blackColor];
+    
+    self.tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToZoomVC:)];
+    self.tapGR.numberOfTouchesRequired = 2;
+    self.tapGR.delegate = self;
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    self.pageScrollview.backgroundColor = [UIColor blackColor];
-    
     [self setUpScrollview];
+    
+    [self.pageScrollview addGestureRecognizer:self.tapGR];
 }
 
 -(void)setUpScrollview {
@@ -45,11 +52,12 @@
     for (UIImage *lighthouseImage in self.lighthouseImageArray) {
         
         UIImageView *lighthouseImageView = [[UIImageView alloc] initWithImage:lighthouseImage];
-//        lighthouseImageView.frame = CGRectMake(imageViewXPosition, 0, scrollViewWidth, scrollViewHeight);
         lighthouseImageView.contentMode = UIViewContentModeScaleAspectFit;
         [self.pageScrollview addSubview:lighthouseImageView];
         lighthouseImageView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addImageViewConstraints:self.pageScrollview UIImageview:lighthouseImageView imagesAdded:imagesAdded];
+        
+//        [lighthouseImageView addGestureRecognizer:self.tapGR];
         
         imagesAdded += 2;
     }
@@ -71,7 +79,6 @@
 
 
 -(void)addImageViewConstraints:(UIScrollView *)scrollView UIImageview:(UIImageView *)imageView imagesAdded:(CGFloat)imagesAdded {
-    
     
     [scrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
                                                            attribute:NSLayoutAttributeWidth
@@ -106,10 +113,28 @@
                                                             constant:0.0]];
 }
 
+
+
+-(void)goToZoomVC:(UITapGestureRecognizer *)tapGR {
+    
+    
+    
+}
+
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark -
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
+    if ([gestureRecognizer isEqual:self.tapGR]) {
+        return YES;
+    }
+    
+    return NO;
+}
 
 @end
