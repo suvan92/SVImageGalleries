@@ -16,6 +16,7 @@
 @property (nonatomic, strong) IBOutlet UIImageView *lighthouseNightView;
 @property (nonatomic, strong) IBOutlet UIImageView *lighthouseZoomedView;
 
+@property (nonatomic, strong) NSArray *lighthouseImageArray;
 
 @end
 
@@ -35,9 +36,14 @@
     UIImage *lighthouseNight = [UIImage imageNamed:@"Lighthouse-night"];
     UIImage *lighthouseZoomed = [UIImage imageNamed:@"Lighthouse-zoomed"];
     
-    self.lighthouseFieldView = [[UIImageView alloc] initWithImage:lighthouseField];
-    self.lighthouseNightView = [[UIImageView alloc] initWithImage:lighthouseNight];
-    self.lighthouseZoomedView = [[UIImageView alloc] initWithImage:lighthouseZoomed];
+    self.lighthouseImageArray = @[lighthouseField, lighthouseNight, lighthouseZoomed];
+    
+    for (UIImage *lighthouseImage in self.lighthouseImageArray) {
+        
+        UIImageView *lighthouseImageView = [[UIImageView alloc] initWithImage:lighthouseImage];
+        
+        
+    }
     
     [self.pageScrollview addSubview:self.lighthouseFieldView];
     [self.pageScrollview addSubview:self.lighthouseNightView];
