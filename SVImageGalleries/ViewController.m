@@ -15,7 +15,6 @@
 
 @property (nonatomic, strong) IBOutlet UIImageView *lighthouseFieldView;
 @property (nonatomic, strong) IBOutlet UIImageView *lighthouseNightView;
-@property (nonatomic, strong) IBOutlet UIImageView *lighthouseZoomedView;
 
 @property (nonatomic, readonly) NSArray *lighthouseImageArray;
 

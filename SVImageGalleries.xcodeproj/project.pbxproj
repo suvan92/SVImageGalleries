@@ -13,6 +13,7 @@
 		14D338731DDA41B500B3F216 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14D338711DDA41B500B3F216 /* Main.storyboard */; };
 		14D338751DDA41B500B3F216 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 14D338741DDA41B500B3F216 /* Assets.xcassets */; };
 		14D338781DDA41B500B3F216 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 14D338761DDA41B500B3F216 /* LaunchScreen.storyboard */; };
+		14D338811DDA68C300B3F216 /* ZoomViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 14D338801DDA68C300B3F216 /* ZoomViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,8 @@
 		14D338741DDA41B500B3F216 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		14D338771DDA41B500B3F216 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		14D338791DDA41B500B3F216 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		14D3387F1DDA68C300B3F216 /* ZoomViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZoomViewController.h; sourceTree = "<group>"; };
+		14D338801DDA68C300B3F216 /* ZoomViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZoomViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +65,8 @@
 				14D3386C1DDA41B500B3F216 /* AppDelegate.m */,
 				14D3386E1DDA41B500B3F216 /* ViewController.h */,
 				14D3386F1DDA41B500B3F216 /* ViewController.m */,
+				14D3387F1DDA68C300B3F216 /* ZoomViewController.h */,
+				14D338801DDA68C300B3F216 /* ZoomViewController.m */,
 				14D338711DDA41B500B3F216 /* Main.storyboard */,
 				14D338741DDA41B500B3F216 /* Assets.xcassets */,
 				14D338761DDA41B500B3F216 /* LaunchScreen.storyboard */,
@@ -153,6 +158,7 @@
 				14D338701DDA41B500B3F216 /* ViewController.m in Sources */,
 				14D3386D1DDA41B500B3F216 /* AppDelegate.m in Sources */,
 				14D3386A1DDA41B500B3F216 /* main.m in Sources */,
+				14D338811DDA68C300B3F216 /* ZoomViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
