@@ -11,6 +11,7 @@
 @interface ZoomViewController () <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *zoomScrollView;
+@property (nonatomic, strong) UIImageView *zoomImageView;
 
 
 @end
@@ -25,13 +26,13 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    UIImageView *imageView = [[UIImageView alloc] init];
+    self.zoomImageView = [[UIImageView alloc] init];
     
-    [self.zoomScrollView addSubview:imageView];
+    [self.zoomScrollView addSubview:self.zoomImageView];
+    [self setImageViewConstraints:self.zoomImageView];
     
-    [self setImageViewConstraints:imageView];
-    
-    
+    self.zoomScrollView.minimumZoomScale = 0.5;
+    self.zoomScrollView.maximumZoomScale = 1.0;
     
     
 }
@@ -75,8 +76,10 @@
                                                                    attribute:NSLayoutAttributeRight
                                                                   multiplier:1.0
                                                                      constant:0.0]];
-    
-    
+}
+
+-(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
+    return self.zoomImageView;
 }
 
 
