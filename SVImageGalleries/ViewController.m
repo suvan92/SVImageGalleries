@@ -12,11 +12,12 @@
 
 @property (weak, nonatomic) IBOutlet UIScrollView *pageScrollview;
 
+
 @property (nonatomic, strong) IBOutlet UIImageView *lighthouseFieldView;
 @property (nonatomic, strong) IBOutlet UIImageView *lighthouseNightView;
 @property (nonatomic, strong) IBOutlet UIImageView *lighthouseZoomedView;
 
-@property (nonatomic, strong) NSArray *lighthouseImageArray;
+@property (nonatomic, readonly) NSArray *lighthouseImageArray;
 
 @end
 
@@ -25,34 +26,86 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    self.pageScrollview.backgroundColor = [UIColor blackColor];
     
     [self setUpScrollview];
 }
 
-
 -(void)setUpScrollview {
     
-    UIImage *lighthouseField = [UIImage imageNamed:@"Lighthouse-in-Field"];
-    UIImage *lighthouseNight = [UIImage imageNamed:@"Lighthouse-night"];
-    UIImage *lighthouseZoomed = [UIImage imageNamed:@"Lighthouse-zoomed"];
+    CGFloat imagesAdded = 1;
     
-    self.lighthouseImageArray = @[lighthouseField, lighthouseNight, lighthouseZoomed];
+    CGFloat scrollViewWidth = CGRectGetWidth(self.pageScrollview.frame);
+    CGFloat scrollViewHeight = CGRectGetHeight(self.pageScrollview.frame);
     
     for (UIImage *lighthouseImage in self.lighthouseImageArray) {
         
         UIImageView *lighthouseImageView = [[UIImageView alloc] initWithImage:lighthouseImage];
+//        lighthouseImageView.frame = CGRectMake(imageViewXPosition, 0, scrollViewWidth, scrollViewHeight);
+        lighthouseImageView.contentMode = UIViewContentModeScaleAspectFit;
+        [self.pageScrollview addSubview:lighthouseImageView];
+        lighthouseImageView.translatesAutoresizingMaskIntoConstraints = NO;
+        [self addImageViewConstraints:self.pageScrollview UIImageview:lighthouseImageView imagesAdded:imagesAdded];
         
-        
+        imagesAdded += 2;
     }
     
-    [self.pageScrollview addSubview:self.lighthouseFieldView];
-    [self.pageScrollview addSubview:self.lighthouseNightView];
-    [self.pageScrollview addSubview:self.lighthouseZoomedView];
+    CGFloat widthOfAllImages = scrollViewWidth*self.lighthouseImageArray.count;
     
+    self.pageScrollview.contentSize = CGSizeMake(widthOfAllImages, scrollViewHeight);
     
-    
+    self.pageScrollview.pagingEnabled = YES;
 }
 
+
+-(NSArray *)lighthouseImageArray {
+    
+    return @[[UIImage imageNamed:@"Lighthouse-in-Field"],
+             [UIImage imageNamed:@"Lighthouse-night"],
+             [UIImage imageNamed:@"Lighthouse-zoomed"]];
+}
+
+
+-(void)addImageViewConstraints:(UIScrollView *)scrollView UIImageview:(UIImageView *)imageView imagesAdded:(CGFloat)imagesAdded {
+    
+    
+    [scrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                           attribute:NSLayoutAttributeWidth
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:scrollView
+                                                           attribute:NSLayoutAttributeWidth
+                                                          multiplier:1.0
+                                                            constant:0.0]];
+    
+    [scrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                           attribute:NSLayoutAttributeHeight
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:imageView
+                                                           attribute:NSLayoutAttributeHeight
+                                                          multiplier:1.0
+                                                            constant:0.0]];
+    
+    [scrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                          attribute:NSLayoutAttributeCenterX
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:scrollView
+                                                          attribute:NSLayoutAttributeCenterX
+                                                         multiplier:imagesAdded
+                                                            constant:0.0]];
+    
+    [scrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+                                                          attribute:NSLayoutAttributeCenterY
+                                                          relatedBy:NSLayoutRelationEqual
+                                                             toItem:scrollView
+                                                          attribute:NSLayoutAttributeCenterY
+                                                         multiplier:1.0
+                                                            constant:0.0]];
+}
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
