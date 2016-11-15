@@ -20,6 +20,8 @@
 
 @property (nonatomic, readonly) NSArray *lighthouseImageArray;
 
+@property (weak, nonatomic) IBOutlet UIPageControl *pageControl;
+
 @end
 
 @implementation ViewController
@@ -28,7 +30,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
     
-    self.pageScrollview.backgroundColor = [UIColor blackColor];
+    self.pageScrollview.backgroundColor = [UIColor clearColor];
     
     self.tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToZoomVC:)];
 //    self.tapGR.numberOfTouchesRequired = 2;
@@ -116,7 +118,7 @@
                                                             constant:0.0]];
 }
 
-
+#pragma mark - scroll view
 
 -(void)goToZoomVC:(UITapGestureRecognizer *)tapGR {
     CGPoint tapLocation = [tapGR locationInView:tapGR.view];
@@ -130,18 +132,28 @@
     }
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+-(void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    
+    CGFloat width = scrollView.frame.size.width;
+    NSInteger page = (scrollView.contentOffset.x + (0.5f * width)) / width;
+    
+    self.pageControl.currentPage = page;
+    
 }
 
-#pragma mark -
+
+#pragma mark - gesture recognizer
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
     if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
         return YES;
     }
     return NO;
+}
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+    // Dispose of any resources that can be recreated.
 }
 
 @end
