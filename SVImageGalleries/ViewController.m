@@ -72,6 +72,8 @@
     
     self.pageScrollview.contentSize = CGSizeMake(widthOfAllImages, scrollViewHeight);
     self.pageScrollview.pagingEnabled = YES;
+    
+    self.pageControl.numberOfPages = self.lighthouseImageArray.count;
 }
 
 
