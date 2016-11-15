@@ -10,4 +10,6 @@
 
 @interface ZoomViewController : UIViewController
 
+@property (nonatomic, strong) UIImage *tappedLighthouseImage;
+
 @end

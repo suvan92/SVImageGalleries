@@ -7,14 +7,15 @@
 //
 
 #import "ViewController.h"
+#import "CurrentImage.h"
 
 @interface ViewController () <UIScrollViewDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *pageScrollview;
 
-
 @property (nonatomic, strong) IBOutlet UIImageView *lighthouseFieldView;
 @property (nonatomic, strong) IBOutlet UIImageView *lighthouseNightView;
+@property (nonatomic, strong) CurrentImage *currentImage;
 @property (nonatomic, strong) UITapGestureRecognizer *tapGR;
 
 @property (nonatomic, readonly) NSArray *lighthouseImageArray;
@@ -30,8 +31,11 @@
     self.pageScrollview.backgroundColor = [UIColor blackColor];
     
     self.tapGR = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(goToZoomVC:)];
-    self.tapGR.numberOfTouchesRequired = 2;
+//    self.tapGR.numberOfTouchesRequired = 2;
     self.tapGR.delegate = self;
+    
+    self.currentImage = [CurrentImage sharedInstance];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -53,11 +57,11 @@
         
         UIImageView *lighthouseImageView = [[UIImageView alloc] initWithImage:lighthouseImage];
         lighthouseImageView.contentMode = UIViewContentModeScaleAspectFit;
+        lighthouseImageView.userInteractionEnabled = YES;
+        
         [self.pageScrollview addSubview:lighthouseImageView];
         lighthouseImageView.translatesAutoresizingMaskIntoConstraints = NO;
         [self addImageViewConstraints:self.pageScrollview UIImageview:lighthouseImageView imagesAdded:imagesAdded];
-        
-//        [lighthouseImageView addGestureRecognizer:self.tapGR];
         
         imagesAdded += 2;
     }
@@ -65,7 +69,6 @@
     CGFloat widthOfAllImages = scrollViewWidth*self.lighthouseImageArray.count;
     
     self.pageScrollview.contentSize = CGSizeMake(widthOfAllImages, scrollViewHeight);
-    
     self.pageScrollview.pagingEnabled = YES;
 }
 
@@ -97,30 +100,35 @@
                                                             constant:0.0]];
     
     [scrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                          attribute:NSLayoutAttributeCenterX
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:scrollView
-                                                          attribute:NSLayoutAttributeCenterX
-                                                         multiplier:imagesAdded
+                                                           attribute:NSLayoutAttributeCenterX
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:scrollView
+                                                           attribute:NSLayoutAttributeCenterX
+                                                          multiplier:imagesAdded
                                                             constant:0.0]];
     
     [scrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
-                                                          attribute:NSLayoutAttributeCenterY
-                                                          relatedBy:NSLayoutRelationEqual
-                                                             toItem:scrollView
-                                                          attribute:NSLayoutAttributeCenterY
-                                                         multiplier:1.0
+                                                           attribute:NSLayoutAttributeCenterY
+                                                           relatedBy:NSLayoutRelationEqual
+                                                              toItem:scrollView
+                                                           attribute:NSLayoutAttributeCenterY
+                                                          multiplier:1.0
                                                             constant:0.0]];
 }
 
 
 
 -(void)goToZoomVC:(UITapGestureRecognizer *)tapGR {
+    CGPoint tapLocation = [tapGR locationInView:tapGR.view];
+    UIView *tappedView = [tapGR.view hitTest:tapLocation withEvent:nil];
     
-    
-    
+    if ([tappedView isKindOfClass:[UIImageView class]]) {
+        
+        [CurrentImage sharedInstance].imageToPass = [(UIImageView *)tappedView image];
+        
+        [self performSegueWithIdentifier:@"ShowDetailedViewController" sender:self];
+    }
 }
-
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -130,10 +138,9 @@
 #pragma mark -
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
-    if ([gestureRecognizer isEqual:self.tapGR]) {
+    if ([gestureRecognizer isKindOfClass:[UITapGestureRecognizer class]]) {
         return YES;
     }
-    
     return NO;
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "ZoomViewController.h"
+#import "CurrentImage.h"
 
 @interface ZoomViewController () <UIScrollViewDelegate>
 
@@ -26,13 +27,20 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    self.zoomImageView = [[UIImageView alloc] init];
+//    self.zoomScrollView.backgroundColor = [UIColor magentaColor];
     
+    self.zoomImageView = [[UIImageView alloc] initWithImage:[CurrentImage sharedInstance].imageToPass];
+    self.zoomImageView.contentMode = UIViewContentModeScaleAspectFit;
+    self.zoomImageView.userInteractionEnabled = YES;
     [self.zoomScrollView addSubview:self.zoomImageView];
-    [self setImageViewConstraints:self.zoomImageView];
+//    self.zoomImageView.translatesAutoresizingMaskIntoConstraints = NO;
     
-    self.zoomScrollView.minimumZoomScale = 0.5;
-    self.zoomScrollView.maximumZoomScale = 1.0;
+    self.zoomImageView.frame = self.zoomScrollView.frame;
+    
+//    [self setImageViewConstraints];
+    
+    self.zoomScrollView.minimumZoomScale = 0.1;
+    self.zoomScrollView.maximumZoomScale = 5.0;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -41,9 +49,9 @@
 }
 
 
-- (void)setImageViewConstraints:(UIImageView *)imageView {
+- (void)setImageViewConstraints {
     
-    [self.zoomScrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+    [self.zoomScrollView addConstraint:[NSLayoutConstraint constraintWithItem:self.zoomImageView
                                                                     attribute:NSLayoutAttributeTop
                                                                     relatedBy:NSLayoutRelationEqual
                                                                        toItem:self.zoomScrollView
@@ -51,7 +59,7 @@
                                                                    multiplier:1.0
                                                                      constant:0.0]];
     
-    [self.zoomScrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+    [self.zoomScrollView addConstraint:[NSLayoutConstraint constraintWithItem:self.zoomImageView
                                                                     attribute:NSLayoutAttributeLeft
                                                                     relatedBy:NSLayoutRelationEqual
                                                                        toItem:self.zoomScrollView
@@ -59,7 +67,7 @@
                                                                    multiplier:1.0
                                                                      constant:0.0]];
     
-    [self.zoomScrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+    [self.zoomScrollView addConstraint:[NSLayoutConstraint constraintWithItem:self.zoomImageView
                                                                     attribute:NSLayoutAttributeBottom
                                                                     relatedBy:NSLayoutRelationEqual
                                                                        toItem:self.zoomScrollView
@@ -67,7 +75,7 @@
                                                                    multiplier:1.0
                                                                      constant:0.0]];
     
-    [self.zoomScrollView addConstraint:[NSLayoutConstraint constraintWithItem:imageView
+    [self.zoomScrollView addConstraint:[NSLayoutConstraint constraintWithItem:self.zoomImageView
                                                                     attribute:NSLayoutAttributeRight
                                                                     relatedBy:NSLayoutRelationEqual
                                                                        toItem:self.zoomScrollView
@@ -79,6 +87,9 @@
 -(UIView *)viewForZoomingInScrollView:(UIScrollView *)scrollView {
     return self.zoomImageView;
 }
+
+
+
 
 
 @end
